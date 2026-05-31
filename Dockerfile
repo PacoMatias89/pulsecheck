@@ -6,6 +6,7 @@ RUN apk add --no-cache maven && mvn clean package -DskipTests -q
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=prod
 RUN addgroup -S pulsecheck && adduser -S pulsecheck -G pulsecheck
 COPY --from=builder /app/target/*.jar app.jar
 RUN chown pulsecheck:pulsecheck app.jar
