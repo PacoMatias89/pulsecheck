@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseCheck — Uptime Monitoring & Status Pages for Teams That Care</title>
+  <meta name="description" content="Monitor your APIs and websites. Get instant alerts when something breaks. Share a beautiful status page with your users. Starting at $0. No credit card required." />
+  <meta name="keywords" content="uptime monitoring, status page, API monitoring, website monitoring, pingdom alternative, statuspage alternative, uptime robot alternative" />
+  <meta property="og:title" content="PulseCheck — Know Before Your Users Do" />
+  <meta property="og:description" content="Uptime monitoring + status pages for $19/mo. Pingdom charges $119. Atlassian StatusPage charges $399. We don't." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://pulsecheck.io" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50:'#eef2ff',100:'#e0e7ff',500:'#6366f1',600:'#4f46e5',700:'#4338ca' }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-bg {
+      background: radial-gradient(ellipse at 60% 0%, rgba(99,102,241,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse at 0% 80%, rgba(6,182,212,0.08) 0%, transparent 60%);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(99,102,241,0.15);
+    }
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      display: inline-block; margin-right: 8px;
+    }
+    .dot-green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+    .dot-red   { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 antialiased">
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <svg class="w-8 h-8 text-brand-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4l3-9 4 18 3-9h4" />
+      </svg>
+      <span class="text-xl font-bold text-white">PulseCheck</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
+      <a href="#features" class="hover:text-white transition">Features</a>
+      <a href="#pricing" class="hover:text-white transition">Pricing</a>
+      <a href="#compare" class="hover:text-white transition">Compare</a>
+      <a href="#faq" class="hover:text-white transition">FAQ</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="/login" class="text-sm text-gray-400 hover:text-white transition">Log in</a>
+      <a href="/register" class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
+        Start Free
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-bg pt-32 pb-24 px-6">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/30 text-brand-300 text-sm px-4 py-2 rounded-full mb-8">
+      <span class="status-dot dot-green"></span>
+      All systems operational · 99.97% uptime this month
+    </div>
+    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+      Know When Your App
+      <span class="gradient-text block mt-1">Goes Down. Before They Do.</span>
+    </h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+      Monitor your APIs, websites and services. Get instant alerts via email, Slack, or Discord.
+      Share a beautiful status page. <strong class="text-white">Everything in one tool, from $19/mo.</strong>
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+      <a href="/register" class="bg-brand-500 hover:bg-brand-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition shadow-lg shadow-brand-500/25">
+        Start Monitoring Free →
+      </a>
+      <a href="#demo" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold px-8 py-4 rounded-xl text-lg transition border border-gray-700">
+        See Live Demo
+      </a>
+    </div>
+    <p class="text-sm text-gray-500">No credit card required · 5 monitors free forever · Setup in 2 minutes</p>
+
+    <!-- Fake dashboard preview -->
+    <div class="mt-16 bg-gray-900 border border-gray-800 rounded-2xl p-6 text-left max-w-3xl mx-auto shadow-2xl">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="font-semibold text-white">Dashboard Overview</h3>
+        <span class="text-xs text-gray-500">Updated 23s ago</span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div class="bg-gray-800 rounded-lg p-3 text-center">
+          <p class="text-2xl font-bold text-white">12</p>
+          <p class="text-xs text-gray-400 mt-1">Monitors</p>
+        </div>
+        <div class="bg-green-900/40 border border-green-800/50 rounded-lg p-3 text-center">
+          <p class="text-2xl font-bold text-green-400">11</p>
+          <p class="text-xs text-gray-400 mt-1">Online</p>
+        </div>
+        <div class="bg-red-900/40 border border-red-800/50 rounded-lg p-3 text-center">
+          <p class="text-2xl font-bold text-red-400">1</p>
+          <p class="text-xs text-gray-400 mt-1">Incidents</p>
+        </div>
+        <div class="bg-gray-800 rounded-lg p-3 text-center">
+          <p class="text-2xl font-bold text-white">99.8%</p>
+          <p class="text-xs text-gray-400 mt-1">Uptime 30d</p>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between bg-gray-800/50 rounded-lg px-4 py-3">
+          <div class="flex items-center gap-3">
+            <span class="status-dot dot-green"></span>
+            <span class="text-sm text-white">api.myapp.com/health</span>
+          </div>
+          <div class="flex items-center gap-4 text-xs text-gray-400">
+            <span>142ms</span>
+            <span class="text-green-400 font-medium">UP</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between bg-gray-800/50 rounded-lg px-4 py-3">
+          <div class="flex items-center gap-3">
+            <span class="status-dot dot-green"></span>
+            <span class="text-sm text-white">myapp.com</span>
+          </div>
+          <div class="flex items-center gap-4 text-xs text-gray-400">
+            <span>89ms</span>
+            <span class="text-green-400 font-medium">UP</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between bg-red-900/20 border border-red-900/40 rounded-lg px-4 py-3">
+          <div class="flex items-center gap-3">
+            <span class="status-dot dot-red"></span>
+            <span class="text-sm text-white">payments.myapp.com</span>
+          </div>
+          <div class="flex items-center gap-4 text-xs">
+            <span class="text-gray-400">timeout</span>
+            <span class="text-red-400 font-medium">DOWN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="py-12 bg-gray-900/50 border-y border-gray-800">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="text-center text-sm text-gray-500 mb-8">Trusted by indie hackers, agencies and SaaS teams who left Pingdom and StatusPage</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p class="text-gray-300 text-sm leading-relaxed mb-4">"Saved $1,200/year vs Pingdom + StatusPage. Setup took 5 minutes. The status page feature alone is worth the entire subscription."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm">M</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Marcus R.</p>
+            <p class="text-gray-500 text-xs">Founder, SaaS startup · 8 monitors</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p class="text-gray-300 text-sm leading-relaxed mb-4">"We manage 40 client sites. Before PulseCheck we were paying $300+/month just for status pages. Now it's $49. No brainer."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-sm">S</div>
+          <div>
+            <p class="text-white text-sm font-semibold">Sarah K.</p>
+            <p class="text-gray-500 text-xs">Agency owner · 40+ monitors</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <p class="text-gray-300 text-sm leading-relaxed mb-4">"Finally a tool that doesn't require a sales call for basic features. The Slack integration works perfectly and the UI is clean."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-cyan-500 flex items-center justify-center text-white font-bold text-sm">J</div>
+          <div>
+            <p class="text-white text-sm font-semibold">James T.</p>
+            <p class="text-gray-500 text-xs">CTO, startup · 25 monitors</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-white mb-4">Everything you need. Nothing you don't.</h2>
+      <p class="text-gray-400 text-lg max-w-xl mx-auto">We focus on the 20% of features that deliver 80% of the value — and price accordingly.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-brand-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">HTTP/HTTPS Monitoring</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Check every 30 seconds to 5 minutes. Custom headers, expected status codes, keyword matching. Timeout detection.</p>
+      </div>
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">Instant Alerts</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Email, Slack, Discord, webhook, Telegram. Alerts when down, alerts when recovered. Configure per monitor.</p>
+      </div>
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">Beautiful Status Pages</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Public status pages with your branding. Custom slug, custom colors, incident history. Share with your users.</p>
+      </div>
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">Incident Management</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Auto-created incidents on downtime. Track duration, root cause. Resolve manually or automatically when service recovers.</p>
+      </div>
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">Uptime Analytics</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">24h, 7d, 30d uptime percentages. Average response time trends. Historical check data. Export via API.</p>
+      </div>
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-7">
+        <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+        </div>
+        <h3 class="text-white font-bold text-lg mb-2">REST API + API Keys</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Full REST API with Swagger docs. API key authentication. Integrate with your CI/CD, dashboards, or automation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITOR COMPARISON -->
+<section id="compare" class="py-24 px-6 bg-gray-900/30">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <h2 class="text-4xl font-bold text-white mb-4">Why teams switch to PulseCheck</h2>
+      <p class="text-gray-400 text-lg">The incumbents charge 5-20x more for the same core features.</p>
+    </div>
+    <div class="overflow-x-auto rounded-2xl border border-gray-800">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="bg-gray-800/80 border-b border-gray-700">
+            <th class="text-left px-6 py-4 text-gray-300 font-semibold">Feature</th>
+            <th class="px-4 py-4 text-brand-400 font-bold">PulseCheck</th>
+            <th class="px-4 py-4 text-gray-400 font-semibold">Pingdom</th>
+            <th class="px-4 py-4 text-gray-400 font-semibold">StatusPage</th>
+            <th class="px-4 py-4 text-gray-400 font-semibold">UptimeRobot</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800">
+          <tr class="bg-gray-900/20">
+            <td class="px-6 py-4 text-gray-300">Starting price</td>
+            <td class="px-4 py-4 text-center text-brand-400 font-bold">$0 free / $19 Pro</td>
+            <td class="px-4 py-4 text-center text-gray-400">$14/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">$29/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">$7/mo</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-gray-300">Uptime monitoring</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+            <td class="px-4 py-4 text-center text-red-400">✗ (separate tool)</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+          </tr>
+          <tr class="bg-gray-900/20">
+            <td class="px-6 py-4 text-gray-300">Status pages included</td>
+            <td class="px-4 py-4 text-center text-green-400">✓ All plans</td>
+            <td class="px-4 py-4 text-center text-red-400">Extra $$$</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+            <td class="px-4 py-4 text-center text-red-400">No</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-gray-300">Custom domain status page</td>
+            <td class="px-4 py-4 text-center text-green-400">$49/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">Not available</td>
+            <td class="px-4 py-4 text-center text-red-400">$399/mo</td>
+            <td class="px-4 py-4 text-center text-red-400">No</td>
+          </tr>
+          <tr class="bg-gray-900/20">
+            <td class="px-6 py-4 text-gray-300">Slack/Discord alerts</td>
+            <td class="px-4 py-4 text-center text-green-400">$19/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">$49/mo+</td>
+            <td class="px-4 py-4 text-center text-red-400">Not built-in</td>
+            <td class="px-4 py-4 text-center text-green-400">$7/mo</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 text-gray-300">REST API</td>
+            <td class="px-4 py-4 text-center text-green-400">✓ All plans</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+            <td class="px-4 py-4 text-center text-green-400">✓</td>
+            <td class="px-4 py-4 text-center text-gray-400">Limited</td>
+          </tr>
+          <tr class="bg-gray-900/20">
+            <td class="px-6 py-4 text-gray-300">50 monitors cost</td>
+            <td class="px-4 py-4 text-center text-brand-400 font-bold">$19/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">$119/mo</td>
+            <td class="px-4 py-4 text-center text-gray-400">N/A</td>
+            <td class="px-4 py-4 text-center text-gray-400">$7/mo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14">
+      <h2 class="text-4xl font-bold text-white mb-4">Simple, honest pricing.</h2>
+      <p class="text-gray-400 text-lg">No per-monitor fees. No hidden limits. No sales calls required.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- FREE -->
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-8">
+        <h3 class="text-gray-300 font-semibold text-sm uppercase tracking-wider mb-2">Starter</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-extrabold text-white">$0</span>
+          <span class="text-gray-500">/mo</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">Perfect for side projects and personal use.</p>
+        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 5 monitors</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 5-minute check interval</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1 status page</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Email alerts</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 90-day history</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> REST API</li>
+        </ul>
+        <a href="/register" class="block text-center bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition border border-gray-700">
+          Start Free
+        </a>
+      </div>
+
+      <!-- PRO -->
+      <div class="card-hover bg-gray-900 border-2 border-brand-500 rounded-2xl p-8 relative">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-full">
+          MOST POPULAR
+        </div>
+        <h3 class="text-brand-400 font-semibold text-sm uppercase tracking-wider mb-2">Pro</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-extrabold text-white">$19</span>
+          <span class="text-gray-500">/mo</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">For SaaS teams and indie hackers who need reliability.</p>
+        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 50 monitors</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1-minute check interval</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 3 status pages</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Slack + Discord + Webhook</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 1-year history</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Incident management</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Priority email support</li>
+        </ul>
+        <a href="/register?plan=pro" class="block text-center bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-brand-500/25">
+          Start 14-day Trial →
+        </a>
+      </div>
+
+      <!-- AGENCY -->
+      <div class="card-hover bg-gray-900 border border-gray-800 rounded-2xl p-8">
+        <h3 class="text-gray-300 font-semibold text-sm uppercase tracking-wider mb-2">Agency</h3>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-5xl font-extrabold text-white">$49</span>
+          <span class="text-gray-500">/mo</span>
+        </div>
+        <p class="text-gray-400 text-sm mb-6">For agencies managing client infrastructure.</p>
+        <ul class="space-y-3 mb-8 text-sm text-gray-300">
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 200 monitors</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 30-second check interval</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 10 status pages</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Custom domain pages</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Telegram alerts</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Unlimited history</li>
+          <li class="flex items-center gap-2"><span class="text-green-400">✓</span> White-label branding</li>
+        </ul>
+        <a href="/register?plan=agency" class="block text-center bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 rounded-xl transition border border-gray-700">
+          Start 14-day Trial
+        </a>
+      </div>
+
+    </div>
+    <div class="mt-10 text-center">
+      <p class="text-gray-500 text-sm">Need more? <a href="mailto:hello@pulsecheck.io" class="text-brand-400 hover:underline">Contact us</a> for Enterprise pricing (unlimited monitors + SLA).</p>
+      <p class="text-gray-600 text-sm mt-2">All plans include: cancel anytime · data export · API access · 99.9% uptime SLA</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-24 px-6 bg-gray-900/30">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-4xl font-bold text-white text-center mb-14">Frequently asked questions</h2>
+    <div class="space-y-4">
+      <details class="bg-gray-900 border border-gray-800 rounded-xl group">
+        <summary class="px-6 py-5 cursor-pointer font-semibold text-white flex justify-between items-center list-none">
+          How is PulseCheck different from UptimeRobot?
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">↓</span>
+        </summary>
+        <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
+          UptimeRobot offers basic monitoring but no built-in status pages, no incident management, and their UI hasn't been updated in years. PulseCheck combines monitoring + status pages + incident tracking in one clean tool, and we're actively maintained. We're also ~50% cheaper than UptimeRobot Pro for teams.
+        </div>
+      </details>
+      <details class="bg-gray-900 border border-gray-800 rounded-xl group">
+        <summary class="px-6 py-5 cursor-pointer font-semibold text-white flex justify-between items-center list-none">
+          Do I need to host anything myself?
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">↓</span>
+        </summary>
+        <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
+          No. PulseCheck is fully hosted SaaS. Sign up, add your monitors, done. If you prefer self-hosting, PulseCheck is open-source — you can run the entire stack with Docker Compose in under 5 minutes.
+        </div>
+      </details>
+      <details class="bg-gray-900 border border-gray-800 rounded-xl group">
+        <summary class="px-6 py-5 cursor-pointer font-semibold text-white flex justify-between items-center list-none">
+          How quickly will I be alerted when my service goes down?
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">↓</span>
+        </summary>
+        <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
+          On the Pro plan, checks run every 60 seconds. We require 3 consecutive failures before triggering an alert to eliminate false positives — so worst case is 3 minutes. On Agency plan with 30-second intervals, that's under 90 seconds.
+        </div>
+      </details>
+      <details class="bg-gray-900 border border-gray-800 rounded-xl group">
+        <summary class="px-6 py-5 cursor-pointer font-semibold text-white flex justify-between items-center list-none">
+          Can I migrate from Pingdom or StatusPage?
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">↓</span>
+        </summary>
+        <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
+          Yes. We offer a CSV import for bulk monitor creation and our team can help you migrate your status page subscribers. Most migrations take under 30 minutes.
+        </div>
+      </details>
+      <details class="bg-gray-900 border border-gray-800 rounded-xl group">
+        <summary class="px-6 py-5 cursor-pointer font-semibold text-white flex justify-between items-center list-none">
+          Is there a free trial for paid plans?
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">↓</span>
+        </summary>
+        <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">
+          Yes. All paid plans include a 14-day free trial. No credit card required to start. You'll be prompted to add payment details only at the end of the trial period.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 px-6">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-5xl font-extrabold text-white mb-6">Start monitoring in 2 minutes.</h2>
+    <p class="text-gray-400 text-xl mb-10">Free forever for 5 monitors. Upgrade when you grow.</p>
+    <a href="/register" class="inline-block bg-brand-500 hover:bg-brand-600 text-white font-bold px-12 py-5 rounded-2xl text-xl transition shadow-2xl shadow-brand-500/30">
+      Create Free Account →
+    </a>
+    <p class="text-gray-600 text-sm mt-6">No credit card · 5 monitors free · Cancel anytime</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-gray-800 py-12 px-6">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-2">
+      <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4l3-9 4 18 3-9h4"/>
+      </svg>
+      <span class="text-white font-semibold">PulseCheck</span>
+      <span class="text-gray-500 text-sm ml-2">© 2025</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm text-gray-500">
+      <a href="/privacy" class="hover:text-gray-300 transition">Privacy</a>
+      <a href="/terms" class="hover:text-gray-300 transition">Terms</a>
+      <a href="mailto:hello@pulsecheck.io" class="hover:text-gray-300 transition">Contact</a>
+      <a href="https://github.com/pacomatias89/pulsecheck" class="hover:text-gray-300 transition">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
